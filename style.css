@@ -16,3 +16,7 @@ button {
 p.footer {
     color: gray;
 }
+
+img.github {
+    width: 3vw;
+}
