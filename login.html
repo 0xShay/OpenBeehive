@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+    
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Better Beehive</title>
+
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-109197144-5"></script>
+        <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-109197144-5');
+        </script>
+        <!-- End of global site tag (gtag.js) - Google Analytics -->
+
+        <link rel="stylesheet" href="style.css">
+        <link rel="icon" href="favicon.ico">
+    
+    </head>
+
+    <body>
+
+        <h1 style="margin-bottom: 0;">BetterBeehive</h1>
+        <h2 id="slogan" style="margin-top: 0;">It's Beehive but better!</h2>
+
+        <label for="username">Username</label>
+        <input type="text" name="username" id="usernameInput">
+        <br>
+        <label for="password">Password</label>
+        <input type="password" name="password" id="passwordInput">
+        <br>
+        <button style="margin: 0;" type="submit" name="action" onclick="loginUser()">Log in</button>
+
+        <p class="footer">If you have any suggestions, DM me on Discord (@Shay#5787) or email me: <a href="mailto:shay@shay.services" target="_blank">shay@shay.services</a></p>
+        <p class="footer">Don't trust the sincerity of the website? All the files are static files, you can download the html files and read the code, it's just a few lines that contact Beehive's API. If you still don't trust it, go have fun using the real Beehive 😂</p>
+
+        <script src="jwt-decode.js"></script>
+        <script src="userTools.js"></script>
+        <script src="slogans.js"></script>
+
+        <script>
+
+            // login post
+            let loginUser = async () => {
+
+                let logged = await fetch("https://beehiveapi.lionhearttrust.org.uk/token", {
+                    method: "POST",
+                    headers: {"Content-Type": "application/json"}, 
+                    body: `grant_type=password&username=${document.getElementById("usernameInput").value}&password=${document.getElementById("passwordInput").value}&client_id=web`
+                });
+
+                let sessionData = await logged.json();
+
+                console.log(sessionData);
+
+                if (sessionData.error_description) {
+                    alert(sessionData.error_description);
+                } else {
+                    let userID = getDecodedAccessToken(sessionData.access_token).id;
+    
+                    localStorage.setItem("access_token", sessionData.access_token);
+                    localStorage.setItem("refresh_token", sessionData.refresh_token);
+    
+                    window.location.replace("home");
+                };
+
+            };
+
+            if (localStorage.getItem("access_token") != null) {
+                window.location.replace("home");
+            };
+
+        </script>
+
+    </body>
+
+</html>

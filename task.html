@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+    
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Better Beehive</title>
+
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-109197144-5"></script>
+        <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-109197144-5');
+        </script>
+        <!-- End of global site tag (gtag.js) - Google Analytics -->
+
+        <link rel="stylesheet" href="style.css">
+        <link rel="icon" href="favicon.ico">
+    
+    </head>
+
+    <body>
+        
+        <button type="submit" id="back" onclick="window.location.replace('assignments')" style="float: right;">Back</button>
+        <button type="submit" id="complete" onclick="markComplete(userID, getUrlParameter('id'))" style="float: right;">Mark complete</button>
+        
+        <p id="usernameMessage">Logged in:</p>
+
+        <h1 style="margin-bottom: 0;">BetterBeehive</h1>
+        <h2 id="slogan" style="margin-top: 0;">It's Beehive but better!</h2>
+
+        <h3 id="title"></h3>
+
+        <p id="taskInfo"></p>
+
+        <script src="jwt-decode.js"></script>
+        <script src="userTools.js"></script>
+        <script src="slogans.js"></script>
+
+        <script>
+
+            const getUrlParameter = (name) => {
+                name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+                var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+                var results = regex.exec(location.search);
+                return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+            };
+
+            let userID = getUserID(localStorage.access_token);
+
+            getPlanner(userID).then(planner => {
+                document.getElementById("usernameMessage").innerHTML = `Logged in: ${planner.firstName} ${planner.lastName} (${planner.tutorGroup.friendlyName})`;
+            });
+
+            if (getUrlParameter("id") == "") {
+                window.location.replace("login");
+            };
+
+            getTaskInfo(userID, getUrlParameter("id")).then(task => {
+                console.log(task);
+                document.getElementById("title").innerHTML = `${task.title} (${task.id})`;
+                document.getElementById("taskInfo").innerHTML = [
+                    `<b>Deadline</b>`,
+                    `${(new Date(task.deadline)).toLocaleDateString()}`,
+                    ``,
+                    `<b>Set by</b>`,
+                    `${task.setBy.firstName} ${task.setBy.lastName}`,
+                    ``,
+                    `<b>Set on</b>`,
+                    `${(new Date(task.setOn)).toLocaleDateString()}`,
+                    ``,
+                    `<b>Description</b>`,
+                    task.details,
+                    ``,
+                    `<b>Links</b>`,
+                    `${task.links.map(l => `<a href="${l.url}">${l.title}</a>`).join("<br>")}`
+                ].join(`<br>`);
+                document.getElementById("complete").disabled = task.isComplete;
+                document.getElementById("complete").innerText = task.isComplete ? "Task completed" : "Mark complete";
+                document.getElementById("title").innerText += task.isComplete ? " ✅" : "";
+            });
+
+            if (localStorage.getItem("access_token") == null) {
+                window.location.replace("login");
+            };
+            
+        </script>
+
+    </body>
+
+</html>

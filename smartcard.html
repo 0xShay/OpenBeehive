@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+    
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Better Beehive</title>
+        
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-109197144-5"></script>
+        <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-109197144-5');
+        </script>
+        <!-- End of global site tag (gtag.js) - Google Analytics -->
+
+        <link rel="stylesheet" href="style.css">
+        <link rel="icon" href="favicon.ico">
+    
+    </head>
+
+    <body>
+        
+        <button type="submit" onclick="logoutUser()" style="float: right;">Log out</button>
+        <button type="submit" onclick="window.location.replace('home')" style="float: right;">Home</button>
+
+        <p id="usernameMessage">Logged in:</p>
+
+        <h1 style="margin-bottom: 0;">BetterBeehive</h1>
+        <h2 id="slogan" style="margin-top: 0;">It's Beehive but better!</h2>
+
+        <h3>Your smartcard</h3>
+
+        <p id="balance"></p>
+
+        <table id="assignments">
+            <tr>
+                <th>Date</th>
+                <th>Description</th>
+                <th>Value</th>
+            </tr>
+        </table>
+
+        <p class="footer">If you have any suggestions, DM me on Discord (@Shay#5787) or email me: <a href="mailto:shay@shay.services" target="_blank">shay@shay.services</a></p>
+
+        <script src="jwt-decode.js"></script>
+        <script src="logoutUser.js"></script>
+        <script src="userTools.js"></script>
+        <script src="slogans.js"></script>
+
+        <script>
+
+            let userID = getUserID(localStorage.access_token);
+
+            getPlanner(userID).then(planner => {
+                document.getElementById("usernameMessage").innerHTML = `Logged in: ${planner.firstName} ${planner.lastName} (${planner.tutorGroup.friendlyName})`;
+            });
+
+            getTransactions(userID).then(txList => {
+                console.log(txList);
+                let totalSpent = 0;
+                txList.forEach(tx => {
+                    let bg = tx.total > 0 ? "#e3ffe7" : "#ffd5d1";
+                    document.getElementById("assignments").innerHTML += [
+                        `<tr >`,
+                        `<th>${(new Date(tx.date)).toLocaleDateString()} @ ${(new Date(tx.date)).toLocaleTimeString().substring(0, 5)}</th>`,
+                        `<th>${tx.description}</th>`,
+                        `<th style="background-color: ${bg}">${tx.total < 0 ? "-" : "+"} £${Math.abs(tx.total).toFixed(2)}</th>`,
+                        `</tr>`
+                    ].join("\n");
+                    if (tx.total < 0) totalSpent += tx.total;
+                });
+                getCardInfo(userID).then(cardInfo => {
+                    document.getElementById("balance").innerHTML = [
+                        `<b>Balance</b>`,
+                        `£${cardInfo[0].balance.toFixed(2)}`,
+                        ``,
+                        `<b>Total spent</b>`,
+                        `£${Math.abs(totalSpent).toFixed(2)}`
+                    ].join("<br>");
+                });
+            });
+
+            if (localStorage.getItem("access_token") == null) {
+                window.location.replace("login");
+            };
+
+        </script>
+
+    </body>
+
+</html>
