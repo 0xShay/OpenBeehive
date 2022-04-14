@@ -78,8 +78,24 @@
                     task.details,
                     ``,
                     `<b>Links</b>`,
-                    `${task.links.map(l => `<a href="${l.url}">${l.title}</a>`).join("<br>")}`
+                    `${task.links.map(l => `<a href="${l.url}" target="_blank">${l.title}</a>`).join("<br>")}`,
+                    ``,
+                    `<b>Files</b>`,
+                    `${task.files.map(l => `<a id="F${l.id}">${l.filename}</a>`).join("<br>")}`
                 ].join(`<br>`);
+                task.files.forEach(async f => {
+                    let task = await fetch(`https://beehiveapi.lionhearttrust.org.uk/v3.5/files/download/${f.id}`, {
+                        headers: new Headers({
+                            "authorization": "Bearer " + localStorage.access_token 
+                        })
+                    }).then((res) => { return res.blob(); }).then((data) => {
+                        // var a = document.createElement("a");
+                        let a = document.getElementById(`F${f.id}`);
+                        a.href = window.URL.createObjectURL(data);
+                        a.download = `${f.filename}`;
+                        // a.click();
+                    });
+                });
                 document.getElementById("complete").disabled = task.isComplete;
                 document.getElementById("complete").innerText = task.isComplete ? "Task completed" : "Mark complete";
                 document.getElementById("title").innerText += task.isComplete ? " ✅" : "";

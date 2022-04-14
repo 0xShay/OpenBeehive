@@ -75,6 +75,17 @@ const getTaskInfo = async (userID, assignmentID) => {
 
 };
 
+const downloadFile = async (fileID) => {
+                
+    let task = await fetch(`https://beehiveapi.lionhearttrust.org.uk/v3.5/files/download/${fileID}`, {
+        headers: new Headers({
+            "authorization": "Bearer " + localStorage.access_token 
+        })
+    });
+    return await task.json();
+
+};
+
 const markComplete = async (userID, assignmentID) => {
     let logged = await fetch(`https://beehiveapi.lionhearttrust.org.uk/v3.5/planner/students/${userID}/assignments/${assignmentID}/submit`, {
         method: "POST",
