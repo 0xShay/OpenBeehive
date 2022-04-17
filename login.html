@@ -25,22 +25,24 @@
     </head>
 
     <body>
+            <h1 style="margin-bottom: 0;" class="title">BetterBeehive</h1>
+            <h2 id="slogan" style="margin-top: 0;">It's Beehive but better!</h2>
+        <div class="logincontainer">
+            <h3 class="pageheader">Sign in</h3>
+            <!-- <label for="username">Username</label> -->
+            <input type="text" name="username" id="usernameInput" placeholder="Email or username">
+            <br>
+            <!-- <label for="password">Password</label> -->
+            <input type="password" name="password" id="passwordInput" placeholder="Password">
+            <br>
+            <button style="margin: 0;" type="submit" onclick="loginUser()"><b>Log in</b></button>
+        </div>
+        
 
-        <h1 style="margin-bottom: 0;">BetterBeehive</h1>
-        <h2 id="slogan" style="margin-top: 0;">It's Beehive but better!</h2>
-
-        <label for="username">Username</label>
-        <input type="text" name="username" id="usernameInput">
-        <br>
-        <label for="password">Password</label>
-        <input type="password" name="password" id="passwordInput">
-        <br>
-        <button style="margin: 0;" type="submit" onclick="loginUser()">Log in</button>
-
-        <p class="footer">If you have any suggestions, DM me on Discord (@Shay#5787) or email me: <a href="mailto:shay@shay.services" target="_blank">shay@shay.services</a></p>
+        <p class="footer">If you have any suggestions, DM me on Discord (@Shay#5787) or email me: <a class="link" style="text-decoration: none;" href="mailto:shay@shay.services" target="_blank"><b>shay@shay.services</b></a></p>
         <p class="footer">Don't trust the sincerity of the website? You can read through the open source code over on GitHub! (0xShay/OpenBeehive)</p>
-        <a href="https://github.com/0xShay/OpenBeehive" target="_blank">
-            Contribute on GitHub
+        <a class="link" style="text-decoration: none;" href="https://github.com/0xShay/OpenBeehive" target="_blank">
+            <b>Contribute on GitHub</b>
         </a>
         
         <script src="jwt-decode.js"></script>

@@ -1,7 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300&display=swap');
-
+@import url("https://fonts.googleapis.com/css2?family=Akshar:wght@300&display=swap");
 body {
     font-family: 'Roboto Mono', monospace;
+    margin-left: 10%;
+    margin-right: 10%;
 }
 
 td, th {
@@ -14,9 +16,98 @@ button {
 }
 
 p.footer {
-    color: gray;
+    color: #9c9c9c;
 }
 
 img.github {
     width: 3vw;
+}
+
+/* Beehive Theme */
+html {
+    height: 100%;
+    background-color: #252525;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-image: linear-gradient(to bottom right, black, #252525);
+  }
+
+.title {
+    color: white;
+}
+h2 {
+    color: azure;
+}
+.pageheader {
+    color: azure;
+    font-size: 200%;
+    font-family: 'Akshar', sans-serif;
+    text-align: center;
+    margin-bottom: 0%;
+}
+label {
+    color: #FFA000;
+}
+.link {
+    color: #FFA000;
+}
+
+.logincontainer {
+background-color: rgba(0, 0, 0, 0.4);
+border-radius: 10px;
+height: 20em;
+padding: 3% 5% 5% 5%;
+
+}
+input[type=text], select {
+    width: 100%;
+    padding: 12px 20px;
+    /* margin: 8px 0; */
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+  input[type=password], select {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+  button {
+    font-size: 100%;
+    width: 100%;
+    background-color: #FFA000;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #ffb534;
+  }
+
+th {
+    color: azure;
+    background-color: #FFA000;
+}
+
+table {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px solid;
+    border-radius: 5px;
+    border-color: azure;
+}
+
+th {
+    border: 0px solid;
+    border-color: rgba(255, 255, 255, 0.534);
 }
