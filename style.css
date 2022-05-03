@@ -20,3 +20,7 @@ p.footer {
 img.github {
     width: 3vw;
 }
+
+th.complete { background-color: #e3ffe7 }
+th.incomplete { background-color: #ffffff }
+th.overdue { background-color: #ffd5d1 }

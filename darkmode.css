@@ -1,0 +1,22 @@
+body {
+    background-color: #121212;
+    color: #ffd500;
+    /* color: #FFA000; */
+}
+
+p.footer {
+    color: white;
+}
+
+a {
+    color: #c4ffff;
+}
+
+td, th {
+    padding: 1vw;
+    border: 0.1vw solid white;
+}
+
+th.complete { background-color: #062400; color: lime }
+th.incomplete { background-color: #262600; color: #ffd500 }
+th.overdue { background-color: #3b0000; color: red }

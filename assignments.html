@@ -36,6 +36,8 @@
 
         <h3>Your tasks</h3>
 
+        <p>Click on a task ID for more details.</p>
+
         <table id="assignments">
             <tr>
                 <th>ID</th>
@@ -67,14 +69,14 @@
                 console.log(assignments);
                 assignments = assignments.sort((a, b) => new Date(b.deadline) - new Date(a.deadline));
                 assignments.forEach(task => {
-                    bg = task.isComplete ? "#e3ffe7" : (new Date(task.deadline) > new Date() ? "#ffffff" : "#ffd5d1");
+                    bgClass = task.isComplete ? "complete" : (new Date(task.deadline) > new Date() ? "incomplete" : "overdue");
                     document.getElementById("assignments").innerHTML += [
                         `<tr>`,
-                        `<th style="background-color: ${bg}"><a href="task?id=${task.id}">${task.id}</a></th>`,
-                        `<th style="background-color: ${bg}">${task.title}</th>`,
-                        `<th style="background-color: ${bg}">${(new Date(task.deadline)).toLocaleDateString()}</th>`,
-                        `<th style="background-color: ${bg}">${task.setBy.firstName} ${task.setBy.lastName}</th>`,
-                        `<th style="background-color: ${bg}">${(new Date(task.setOn)).toLocaleDateString()}</th>`,
+                        `<th class="${bgClass}"><a href="task?id=${task.id}">${task.id}</a></th>`,
+                        `<th class="${bgClass}">${task.title}</th>`,
+                        `<th class="${bgClass}">${(new Date(task.deadline)).toLocaleDateString()}</th>`,
+                        `<th class="${bgClass}">${task.setBy.firstName} ${task.setBy.lastName}</th>`,
+                        `<th class="${bgClass}">${(new Date(task.setOn)).toLocaleDateString()}</th>`,
                         `</tr>`
                     ].join("\n");
                 });
