@@ -103,5 +103,6 @@ const markComplete = async (userID, assignmentID) => {
             "assignmentId": assignmentID
         })
     });
-    location.reload();
+    // location.reload();
+    window.location.replace('assignments');
 };
