@@ -35,7 +35,7 @@
         <label for="password">Password</label>
         <input type="password" name="password" id="passwordInput">
         <br>
-        <button style="margin: 0;" type="submit" onclick="loginUser()">Log in</button>
+        <button style="margin: 0;" type="submit" onclick="loginUser()" id="loginBtn">Log in</button>
 
         <p class="footer">Don't trust the sincerity of the website? You can read through the open source code over on GitHub! (0xShay/OpenBeehive)</p>
         <a href="https://github.com/0xShay/OpenBeehive" target="_blank">
@@ -47,6 +47,15 @@
         <script src="slogans.js"></script>
 
         <script>
+
+            // enter = button press
+            let passwordInput = document.getElementById("passwordInput");
+            passwordInput.addEventListener("keypress", e => {
+                if (event.key === "Enter") {
+                    event.preventDefault();
+                    document.getElementById("loginBtn").click();
+                };
+            });
 
             // login post
             let loginUser = async () => {
