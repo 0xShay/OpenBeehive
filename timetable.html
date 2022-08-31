@@ -60,9 +60,13 @@
                     tag.appendChild(text);
                     ttSpan.appendChild(tag);
                     
+                    let subjectColors = {
+                        "Self Study": "#FFFFFF"
+                    };
+
                     s.cycles.forEach(c => {
                         let tbl = document.createElement("table");
-                        for (let i = 0; i < 7; i++) {
+                        for (let i = 0; i < 8; i++) {
                             const tr = tbl.insertRow();
                             for (let j = 0; j < 5; j++) {
                                 if (i == 0) {
@@ -72,12 +76,18 @@
                                     th.style.fontWeight = 'bold';
                                 } else {
                                     const td = tr.insertCell();
-                                    const lesson = c["days"][j]["lessons"][i];
+                                    const lesson = c["days"][j]["lessons"][i-1];
+                                    if (!subjectColors[lesson["subject"]]) {
+                                        let localColor = "";
+                                        crypto.getRandomValues(new Uint8Array(3)).forEach(i => localColor += (((i%100) + 155).toString(16)).padStart(2, "0"));
+                                        subjectColors[lesson["subject"]] = localColor;
+                                    }
                                     if (lesson["subject"] == "Self Study") {
                                         td.innerHTML = ``;
                                     } else {
                                         td.innerHTML = `${lesson["subject"]}<br>${lesson["room"]}<br>${lesson["teacher"]}`;
                                     }
+                                    td.style.backgroundColor = "#" + subjectColors[lesson["subject"]];
                                     td.style.border = '1px solid black';
                                     td.style.width = '10%';
                                 }
