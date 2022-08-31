@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+    
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Better Beehive</title>
+        
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-5SR0JTV48F"></script>
+        <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-5SR0JTV48F');
+        </script>
+        <!-- End of global site tag (gtag.js) - Google Analytics -->
+
+        <link rel="stylesheet" href="style.css">
+        <link rel="icon" href="favicon.ico">
+    
+    </head>
+
+    <body>
+        
+        <button type="submit" onclick="logoutUser()" style="float: right;">Log out</button>
+        <button type="submit" onclick="window.location.replace('home')" style="float: right;">Home</button>
+
+        <p id="usernameMessage">Logged in:</p>
+
+        <h1 style="margin-bottom: 0;">BetterBeehive</h1>
+        <h2 id="slogan" style="margin-top: 0;">It's Beehive but better!</h2>
+
+        <h3>Your timetable</h3>
+
+        <span id="timetables"></span>
+
+        <a href="https://github.com/0xShay/OpenBeehive" target="_blank">
+            Contribute on GitHub
+        </a>
+        
+        <script src="jwt-decode.js"></script>
+        <script src="logoutUser.js"></script>
+        <script src="userTools.js"></script>
+        <script src="slogans.js"></script>
+
+        <script>
+
+            let userID = getUserID(localStorage.access_token);
+            let ttSpan = document.getElementById("timetables");
+
+            getTimetable(userID).then(timetables => {
+                console.log(timetables);
+                timetables.schools.forEach(s => {
+                    let tag = document.createElement("h4");
+                    let text = document.createTextNode(s.school.name);
+                    tag.appendChild(text);
+                    ttSpan.appendChild(tag);
+                    
+                    s.cycles.forEach(c => {
+                        let tbl = document.createElement("table");
+                        for (let i = 0; i < 7; i++) {
+                            const tr = tbl.insertRow();
+                            for (let j = 0; j < 5; j++) {
+                                if (i == 0) {
+                                    const th = tr.insertCell();
+                                    th.appendChild(document.createTextNode(["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"][j]));
+                                    th.style.border = '1px solid black';
+                                    th.style.fontWeight = 'bold';
+                                } else {
+                                    const td = tr.insertCell();
+                                    const lesson = c["days"][j]["lessons"][i];
+                                    if (lesson["subject"] == "Self Study") {
+                                        td.innerHTML = ``;
+                                    } else {
+                                        td.innerHTML = `${lesson["subject"]}<br>${lesson["room"]}<br>${lesson["teacher"]}`;
+                                    }
+                                    td.style.border = '1px solid black';
+                                    td.style.width = '10%';
+                                }
+                            }
+                        }
+                        ttSpan.appendChild(tbl);
+                    })
+                })
+            });
+
+            if (localStorage.getItem("access_token") == null) {
+                window.location.replace("login");
+            };
+
+        </script>
+
+    </body>
+
+</html>

@@ -64,6 +64,18 @@ let getPlanner = async (userID) => {
 
 };
 
+let getTimetable = async (userID) => {
+                
+    let timetable = await fetch("https://beehiveapi.lionhearttrust.org.uk/v3.5/planner/users/" + userID + "/timetable", {
+        headers: new Headers({
+            "authorization": "Bearer " + localStorage.access_token 
+        })
+    });
+
+    return await timetable.json();
+
+};
+
 const getTaskInfo = async (userID, assignmentID) => {
                 
     let task = await fetch(`https://beehiveapi.lionhearttrust.org.uk/v3.5/planner/users/${userID}/assignments/${assignmentID}`, {
