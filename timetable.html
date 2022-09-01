@@ -52,51 +52,56 @@
             let userID = getUserID(localStorage.access_token);
             let ttSpan = document.getElementById("timetables");
 
-            getTimetable(userID).then(timetables => {
-                console.log(timetables);
-                timetables.schools.forEach(s => {
-                    let tag = document.createElement("h4");
-                    let text = document.createTextNode(s.school.name);
-                    tag.appendChild(text);
-                    ttSpan.appendChild(tag);
-                    
-                    let subjectColors = {
-                        "Self Study": "#FFFFFF"
-                    };
-
-                    s.cycles.forEach(c => {
-                        let tbl = document.createElement("table");
-                        for (let i = 0; i < 8; i++) {
-                            const tr = tbl.insertRow();
-                            for (let j = 0; j < 5; j++) {
-                                if (i == 0) {
-                                    const th = tr.insertCell();
-                                    th.appendChild(document.createTextNode(["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"][j]));
-                                    th.style.border = '1px solid black';
-                                    th.style.fontWeight = 'bold';
-                                } else {
-                                    const td = tr.insertCell();
-                                    const lesson = c["days"][j]["lessons"][i-1];
-                                    if (!subjectColors[lesson["subject"]]) {
-                                        let localColor = "";
-                                        crypto.getRandomValues(new Uint8Array(3)).forEach(i => localColor += (((i%100) + 155).toString(16)).padStart(2, "0"));
-                                        subjectColors[lesson["subject"]] = localColor;
-                                    }
-                                    if (lesson["subject"] == "Self Study") {
-                                        td.innerHTML = ``;
+            function showTimetable(uID) {
+                ttSpan.innerHTML = "";
+                getTimetable(uID).then(timetables => {
+                    console.log(timetables);
+                    timetables.schools.forEach(s => {
+                        let tag = document.createElement("h4");
+                        let text = document.createTextNode(s.school.name);
+                        tag.appendChild(text);
+                        ttSpan.appendChild(tag);
+                        
+                        let subjectColors = {
+                            "Self Study": "#FFFFFF"
+                        };
+    
+                        s.cycles.forEach(c => {
+                            let tbl = document.createElement("table");
+                            for (let i = 0; i < 8; i++) {
+                                const tr = tbl.insertRow();
+                                for (let j = 0; j < 5; j++) {
+                                    if (i == 0) {
+                                        const th = tr.insertCell();
+                                        th.appendChild(document.createTextNode(["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"][j]));
+                                        th.style.border = '1px solid black';
+                                        th.style.fontWeight = 'bold';
                                     } else {
-                                        td.innerHTML = `${lesson["subject"]}<br>${lesson["room"]}<br>${lesson["teacher"]}`;
+                                        const td = tr.insertCell();
+                                        const lesson = c["days"][j]["lessons"][i-1];
+                                        if (!subjectColors[lesson["subject"]]) {
+                                            let localColor = "";
+                                            crypto.getRandomValues(new Uint8Array(3)).forEach(i => localColor += (((i%100) + 155).toString(16)).padStart(2, "0"));
+                                            subjectColors[lesson["subject"]] = localColor;
+                                        }
+                                        if (lesson["subject"] == "Self Study") {
+                                            td.innerHTML = ``;
+                                        } else {
+                                            td.innerHTML = `${lesson["subject"]}<br>${lesson["room"]}<br>${lesson["teacher"]}`;
+                                        }
+                                        td.style.backgroundColor = "#" + subjectColors[lesson["subject"]];
+                                        td.style.border = '1px solid black';
+                                        td.style.width = '10%';
                                     }
-                                    td.style.backgroundColor = "#" + subjectColors[lesson["subject"]];
-                                    td.style.border = '1px solid black';
-                                    td.style.width = '10%';
                                 }
                             }
-                        }
-                        ttSpan.appendChild(tbl);
+                            ttSpan.appendChild(tbl);
+                        })
                     })
-                })
-            });
+                });
+            };
+
+            showTimetable(userID);
 
             if (localStorage.getItem("access_token") == null) {
                 window.location.replace("login");
