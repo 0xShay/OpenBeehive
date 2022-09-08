@@ -52,7 +52,32 @@
             let userID = getUserID(localStorage.access_token);
             let ttSpan = document.getElementById("timetables");
 
-            function showTimetable(uID) {
+            let subjectColors = {
+                "Self Study": "#ffffff",
+                "Silent Study": "#e6e6e6",
+                "Mathematics": "#e0ffde",
+                "Computer Science": "#e0feff",
+                "French": "#ccccff",
+                "Economics": "#ffebc7",
+                "Physics": "#cfe0ff",
+                "History": "#ffd9d9"
+            };            
+
+            function previewSubjectColors() {
+                ttSpan.innerHTML = "";
+                let tbl = document.createElement("table");
+                for (subjectName of Object.keys(subjectColors)) {
+                    const tr = tbl.insertRow();
+                    const td = tr.insertCell();
+                    td.innerHTML = subjectName;
+                    td.style.backgroundColor = subjectColors[subjectName];
+                    td.style.border = '1px solid black';
+                    td.style.width = '100%';
+                }
+                ttSpan.appendChild(tbl);
+            };
+
+            function showTimetable(uID=userID) {
                 ttSpan.innerHTML = "";
                 getTimetable(uID).then(timetables => {
                     console.log(timetables);
@@ -61,10 +86,6 @@
                         let text = document.createTextNode(s.school.name);
                         tag.appendChild(text);
                         ttSpan.appendChild(tag);
-                        
-                        let subjectColors = {
-                            "Self Study": "#FFFFFF"
-                        };
     
                         s.cycles.forEach(c => {
                             let tbl = document.createElement("table");
@@ -79,17 +100,20 @@
                                     } else {
                                         const td = tr.insertCell();
                                         const lesson = c["days"][j]["lessons"][i-1];
+
                                         if (!subjectColors[lesson["subject"]]) {
                                             let localColor = "";
                                             crypto.getRandomValues(new Uint8Array(3)).forEach(i => localColor += (((i%100) + 155).toString(16)).padStart(2, "0"));
-                                            subjectColors[lesson["subject"]] = localColor;
+                                            subjectColors[lesson["subject"]] = "#" + localColor;
                                         }
+                                        
                                         if (lesson["subject"] == "Self Study") {
                                             td.innerHTML = ``;
                                         } else {
                                             td.innerHTML = `${lesson["subject"]}<br>${lesson["room"]}<br>${lesson["teacher"]}`;
                                         }
-                                        td.style.backgroundColor = "#" + subjectColors[lesson["subject"]];
+
+                                        td.style.backgroundColor = subjectColors[lesson["subject"]];
                                         td.style.border = '1px solid black';
                                         td.style.width = '10%';
                                     }
