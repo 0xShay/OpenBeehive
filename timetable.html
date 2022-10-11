@@ -38,6 +38,8 @@
 
         <span id="timetables"></span>
 
+        <br>
+
         <a href="https://github.com/0xShay/OpenBeehive" target="_blank">
             Contribute on GitHub
         </a>
@@ -46,6 +48,8 @@
         <script src="logoutUser.js"></script>
         <script src="userTools.js"></script>
         <script src="slogans.js"></script>
+
+        <script src="ics.deps.min.js"></script>
 
         <script>
 
@@ -88,6 +92,9 @@
                         ttSpan.appendChild(tag);
     
                         s.cycles.forEach(c => {
+                            let cal = ics();
+                            let calBtn = document.createElement("button");
+                            calBtn.innerHTML = "Export .ics";
                             let tbl = document.createElement("table");
                             for (let i = 0; i < 8; i++) {
                                 const tr = tbl.insertRow();
@@ -111,6 +118,20 @@
                                             td.innerHTML = ``;
                                         } else {
                                             td.innerHTML = `${lesson["subject"]}<br>${lesson["room"]}<br>${lesson["teacher"]}`;
+
+                                            let dS = new Date();
+                                            dS.setDate(dS.getDate() + ((7-dS.getDay())%7+(j+1)) % 7);
+                                            dS.setHours(lesson["starts"].split(":")[0]);
+                                            dS.setMinutes(lesson["starts"].split(":")[1]);
+                                            dS.setSeconds(lesson["starts"].split(":")[2]);
+
+                                            let dE = new Date();
+                                            dE.setDate(dE.getDate() + ((7-dE.getDay())%7+(j+1)) % 7);
+                                            dE.setHours(lesson["ends"].split(":")[0]);
+                                            dE.setMinutes(lesson["ends"].split(":")[1]);
+                                            dE.setSeconds(lesson["ends"].split(":")[2]);
+                                            
+                                            cal.addEvent(lesson["subject"], "", lesson["room"], dS, dE, { freq: "WEEKLY" });
                                         }
 
                                         td.style.backgroundColor = subjectColors[lesson["subject"]];
@@ -120,6 +141,11 @@
                                 }
                             }
                             ttSpan.appendChild(tbl);
+                            calBtn.onclick = () => {
+                                prompt("This is an experimental feature and could potentially devastate your calendar. Type YES to proceed.")
+                                == "YES" ? cal.download() : false;
+                            };
+                            ttSpan.appendChild(calBtn);
                         })
                     })
                 });
