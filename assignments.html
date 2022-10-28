@@ -69,7 +69,13 @@
                 console.log(assignments);
                 assignments = assignments.sort((a, b) => new Date(b.deadline) - new Date(a.deadline));
                 assignments.forEach(task => {
-                    bgClass = task.isComplete ? "complete" : (new Date(task.deadline) > new Date() ? "incomplete" : "overdue");
+                    let bgClass = "incomplete";
+                    let deadline = new Date(task.deadline);
+                    let timeNow = new Date();
+                    let isToday = (deadline.getFullYear() == timeNow.getFullYear() && deadline.getMonth() == timeNow.getMonth() && deadline.getDate() == timeNow.getDate());
+                    if (timeNow > deadline) bgClass = "overdue";
+                    if (isToday) bgClass = "today";
+                    if (task.isComplete) bgClass = "complete";
                     document.getElementById("assignments").innerHTML += [
                         `<tr>`,
                         `<th class="${bgClass}"><a href="task?id=${task.id}">${task.id}</a></th>`,
