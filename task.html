@@ -29,7 +29,7 @@
         <button type="submit" id="back" onclick="window.location.replace('assignments')" style="float: right;">Back</button>
         <button type="submit" id="complete" onclick="markComplete(userID, getUrlParameter('id'))" style="float: right;">Mark complete</button>
         
-        <p id="usernameMessage">Logged in:</p>
+        <p id="usernameMessage">Logged in: <span id="username"></span></p>
 
         <h1 style="margin-bottom: 0;">BetterBeehive</h1>
         <h2 id="slogan" style="margin-top: 0;">It's Beehive but better!</h2>
@@ -54,7 +54,7 @@
             let userID = getUserID(localStorage.access_token);
 
             getPlanner(userID).then(planner => {
-                document.getElementById("usernameMessage").innerHTML = `Logged in: ${planner.firstName} ${planner.lastName} (${planner.tutorGroup.friendlyName})`;
+                document.getElementById("username").innerHTML = `${planner.firstName} ${planner.lastName} (${planner.tutorGroup.friendlyName})`;
             });
 
             if (getUrlParameter("id") == "") {

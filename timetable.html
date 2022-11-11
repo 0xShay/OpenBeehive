@@ -29,7 +29,7 @@
         <button type="submit" onclick="logoutUser()" style="float: right;">Log out</button>
         <button type="submit" onclick="window.location.replace('home')" style="float: right;">Home</button>
 
-        <p id="usernameMessage">Logged in:</p>
+        <p id="usernameMessage">Logged in: <span id="username"></span></p>
 
         <h1 style="margin-bottom: 0;">BetterBeehive</h1>
         <h2 id="slogan" style="margin-top: 0;">It's Beehive but better!</h2>
@@ -40,9 +40,10 @@
 
         <br>
 
-        <a href="https://github.com/0xShay/OpenBeehive" target="_blank">
-            Contribute on GitHub
-        </a>
+        <p class="footer">
+            Contribute on Github:
+            <a href="https://github.com/0xShay/OpenBeehive" target="_blank">0xShay/OpenBeehive</a>
+        </p>
         
         <script src="jwt-decode.js"></script>
         <script src="logoutUser.js"></script>
@@ -54,17 +55,33 @@
         <script>
 
             let userID = getUserID(localStorage.access_token);
+
+            getPlanner(userID).then(planner => {
+                document.getElementById("username").innerHTML = `${planner.firstName} ${planner.lastName} (${planner.tutorGroup.friendlyName})`;
+            });
+
             let ttSpan = document.getElementById("timetables");
 
+            // let subjectColors = {
+            //     "Self Study": "#ffffff",
+            //     "Silent Study": "#e6e6e6",
+            //     "Mathematics": "#e0ffde",
+            //     "Computer Science": "#e0feff",
+            //     "French": "#ccccff",
+            //     "Economics": "#ffebc7",
+            //     "Physics": "#cfe0ff",
+            //     "History": "#ffd9d9"
+            // };
+
             let subjectColors = {
-                "Self Study": "#ffffff",
-                "Silent Study": "#e6e6e6",
-                "Mathematics": "#e0ffde",
-                "Computer Science": "#e0feff",
-                "French": "#ccccff",
-                "Economics": "#ffebc7",
-                "Physics": "#cfe0ff",
-                "History": "#ffd9d9"
+                "Self Study": "#121212",
+                "Silent Study": "#000000",
+                "Mathematics": "#0e2112",
+                "Computer Science": "#162929",
+                "French": "#161b2b",
+                "Economics": "#241e13",
+                "Physics": "#1a2430",
+                "History": "#291716"
             };            
 
             function previewSubjectColors() {
@@ -75,8 +92,6 @@
                     const td = tr.insertCell();
                     td.innerHTML = subjectName;
                     td.style.backgroundColor = subjectColors[subjectName];
-                    td.style.border = '1px solid black';
-                    td.style.width = '100%';
                 }
                 ttSpan.appendChild(tbl);
             };
@@ -102,7 +117,6 @@
                                     if (i == 0) {
                                         const th = tr.insertCell();
                                         th.appendChild(document.createTextNode(["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"][j]));
-                                        th.style.border = '1px solid black';
                                         th.style.fontWeight = 'bold';
                                     } else {
                                         const td = tr.insertCell();
@@ -135,7 +149,6 @@
                                         }
 
                                         td.style.backgroundColor = subjectColors[lesson["subject"]];
-                                        td.style.border = '1px solid black';
                                         td.style.width = '10%';
                                     }
                                 }

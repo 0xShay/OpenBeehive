@@ -29,7 +29,7 @@
         <button type="submit" onclick="logoutUser()" style="float: right;">Log out</button>
         <button type="submit" onclick="window.location.replace('home')" style="float: right;">Home</button>
 
-        <p id="usernameMessage">Logged in:</p>
+        <p id="usernameMessage">Logged in: <span id="username"></span></p>
 
         <h1 style="margin-bottom: 0;">BetterBeehive</h1>
         <h2 id="slogan" style="margin-top: 0;">It's Beehive but better!</h2>
@@ -48,9 +48,10 @@
             </tr>
         </table>
 
-        <a href="https://github.com/0xShay/OpenBeehive" target="_blank">
-            Contribute on GitHub
-        </a>
+        <p class="footer">
+            Contribute on Github:
+            <a href="https://github.com/0xShay/OpenBeehive" target="_blank">0xShay/OpenBeehive</a>
+        </p>
         
         <script src="jwt-decode.js"></script>
         <script src="logoutUser.js"></script>
@@ -62,7 +63,7 @@
             let userID = getUserID(localStorage.access_token);
 
             getPlanner(userID).then(planner => {
-                document.getElementById("usernameMessage").innerHTML = `Logged in: ${planner.firstName} ${planner.lastName} (${planner.tutorGroup.friendlyName})`;
+                document.getElementById("username").innerHTML = `${planner.firstName} ${planner.lastName} (${planner.tutorGroup.friendlyName})`;
             });
 
             getAssignments(userID, 100).then(assignments => {
@@ -76,13 +77,14 @@
                     if (timeNow > deadline) bgClass = "overdue";
                     if (isToday) bgClass = "today";
                     if (task.isComplete) bgClass = "complete";
+                    // bgClass = ["incomplete", "complete", "today", "overdue"][Math.floor(Math.random() * 4)];
                     document.getElementById("assignments").innerHTML += [
                         `<tr>`,
-                        `<th class="${bgClass}"><a href="task?id=${task.id}">${task.id}</a></th>`,
-                        `<th class="${bgClass}">${task.title}</th>`,
-                        `<th class="${bgClass}">${(new Date(task.deadline)).toLocaleDateString()}</th>`,
-                        `<th class="${bgClass}">${task.setBy.firstName} ${task.setBy.lastName}</th>`,
-                        `<th class="${bgClass}">${(new Date(task.setOn)).toLocaleDateString()}</th>`,
+                        `<td class="${bgClass}"><a href="task?id=${task.id}">${task.id}</a></td>`,
+                        `<td class="${bgClass}">${task.title}</td>`,
+                        `<td class="${bgClass}">${(new Date(task.deadline)).toLocaleDateString()}</td>`,
+                        `<td class="${bgClass}">${task.setBy.firstName} ${task.setBy.lastName}</td>`,
+                        `<td class="${bgClass}">${(new Date(task.setOn)).toLocaleDateString()}</td>`,
                         `</tr>`
                     ].join("\n");
                 });

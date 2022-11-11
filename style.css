@@ -1,27 +1,108 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300&display=swap'); */
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;500;700&display=swap');
 
 body {
-    font-family: 'Roboto Mono', monospace;
+    /* font-family: 'Roboto Mono', monospace; */
+    font-family: 'Ubuntu', sans-serif;
+    background-color: #121212;
+}
+
+p, label, h4, span#username {
+    color: #a6a6a6;
+}
+
+h1, h2, h3, b {
+    color: #d4d4d4;
+}
+
+h1 {
+    color: #d7d3a8;
+}
+
+h2#slogan {
+    color: #6e6c57;
+}
+
+p.footer {
+    color: #636363;
+}
+
+p.footer a {
+    color: #99b2e0;
+}
+
+p.footer a:hover {
+    color: #431185;
+}
+
+p#usernameMessage {
+    color: #636363;
+}
+
+a {
+    color: #afe3e0;
+}
+
+a:hover {
+    color: #1b2f73;
 }
 
 td, th {
     padding: 1vw;
-    border: 0.1vw solid black;
+    border: 0.1vw solid #a6a6a6;
+    color: #a6a6a6;
+    text-align: center;
+}
+
+ul.sitemap a {
+    color: #a6a6a6;
+}
+
+ul.sitemap a:hover {
+    color: #636363;
+}
+
+ul.sitemap {
+    list-style: none; /* Remove default bullets */
+}
+
+ul.sitemap li::before {
+    font-size: 1.2vw;
+    content: "\2022";
+    color: #a6a6a6;
+    font-weight: bold;
+    display: inline-block;
+    width: 1em;
+    margin-left: -1em;
 }
 
 button {
+    font-family: 'Ubuntu', sans-serif;
     margin: 0.2vw;
+    padding: 0.2vw 1vw;
+    border: 1px solid #afe3e0;
+    border-radius: 0.2vw;
+    color: #afe3e0;
+    background-color: #162929;
 }
 
-p.footer {
-    color: gray;
+button:hover {
+    margin: 0.2vw;
+    padding: 0.2vw 1vw;
+    background-color: #161b2b;
 }
 
 img.github {
     width: 3vw;
 }
 
-th.complete { background-color: #e3ffe7 }
-th.incomplete { background-color: #ffffff }
-th.today { background-color: #ffe2c9 }
-th.overdue { background-color: #ffd5d1 }
+th, td { background-color: #121212 }
+th.complete, td.complete, td.txIncrease { background-color: #0e2112 }
+th.incomplete, td.incomplete { background-color: #121212 }
+th.today, td.today { background-color: #241e13 }
+th.overdue, td.overdue, td.txDecrease { background-color: #291716 }
+
+/* th.complete, td.complete { border-color: #30ff68; color: #30ff68; }
+th.incomplete, td.incomplete { }
+th.today, td.today { border-color: #ffbb29; color: #ffbb29; }
+th.overdue, td.overdue { border-color: #ff3d3d; color: #ff3d3d; } */

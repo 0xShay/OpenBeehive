@@ -29,7 +29,7 @@
         <button type="submit" onclick="logoutUser()" style="float: right;">Log out</button>
         <button type="submit" onclick="window.location.replace('home')" style="float: right;">Home</button>
 
-        <p id="usernameMessage">Logged in:</p>
+        <p id="usernameMessage">Logged in: <span id="username"></span></p>
 
         <h1 style="margin-bottom: 0;">BetterBeehive</h1>
         <h2 id="slogan" style="margin-top: 0;">It's Beehive but better!</h2>
@@ -38,9 +38,10 @@
 
         <p id="stats"></p>
 
-        <a href="https://github.com/0xShay/OpenBeehive" target="_blank">
-            Contribute on GitHub
-        </a>
+        <p class="footer">
+            Contribute on Github:
+            <a href="https://github.com/0xShay/OpenBeehive" target="_blank">0xShay/OpenBeehive</a>
+        </p>
         
         <script src="jwt-decode.js"></script>
         <script src="logoutUser.js"></script>
@@ -52,7 +53,7 @@
             let userID = getUserID(localStorage.access_token);
 
             getPlanner(userID).then(planner => {
-                document.getElementById("usernameMessage").innerHTML = `Logged in: ${planner.firstName} ${planner.lastName} (${planner.tutorGroup.friendlyName})`;
+                document.getElementById("username").innerHTML = `${planner.firstName} ${planner.lastName} (${planner.tutorGroup.friendlyName})`;
                 document.getElementById("stats").innerHTML = [
                     `<b>Attendance</b>`,
                     `${planner.pastoral.attendance.toFixed(2)}%`,

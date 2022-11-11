@@ -29,7 +29,7 @@
         <button type="submit" onclick="logoutUser()" style="float: right;">Log out</button>
         <button type="submit" onclick="window.location.replace('home')" style="float: right;">Home</button>
 
-        <p id="usernameMessage">Logged in:</p>
+        <p id="usernameMessage">Logged in: <span id="username"></span></p>
 
         <h1 style="margin-bottom: 0;">BetterBeehive</h1>
         <h2 id="slogan" style="margin-top: 0;">It's Beehive but better!</h2>
@@ -46,9 +46,10 @@
             </tr>
         </table>
 
-        <a href="https://github.com/0xShay/OpenBeehive" target="_blank">
-            Contribute on GitHub
-        </a>
+        <p class="footer">
+            Contribute on Github:
+            <a href="https://github.com/0xShay/OpenBeehive" target="_blank">0xShay/OpenBeehive</a>
+        </p>
         
         <script src="jwt-decode.js"></script>
         <script src="logoutUser.js"></script>
@@ -60,19 +61,18 @@
             let userID = getUserID(localStorage.access_token);
 
             getPlanner(userID).then(planner => {
-                document.getElementById("usernameMessage").innerHTML = `Logged in: ${planner.firstName} ${planner.lastName} (${planner.tutorGroup.friendlyName})`;
+                document.getElementById("username").innerHTML = `${planner.firstName} ${planner.lastName} (${planner.tutorGroup.friendlyName})`;
             });
 
             getTransactions(userID).then(txList => {
                 console.log(txList);
                 let totalSpent = 0;
                 txList.forEach(tx => {
-                    let bg = tx.total > 0 ? "#e3ffe7" : "#ffd5d1";
                     document.getElementById("assignments").innerHTML += [
-                        `<tr >`,
-                        `<th>${(new Date(tx.date)).toLocaleDateString()} @ ${(new Date(tx.date)).toLocaleTimeString().substring(0, 5)}</th>`,
-                        `<th>${tx.description}</th>`,
-                        `<th style="background-color: ${bg}">${tx.total < 0 ? "-" : "+"} £${Math.abs(tx.total).toFixed(2)}</th>`,
+                        `<tr>`,
+                        `<td>${(new Date(tx.date)).toLocaleDateString()} @ ${(new Date(tx.date)).toLocaleTimeString().substring(0, 5)}</td>`,
+                        `<td>${tx.description}</td>`,
+                        `<td class="${tx.total > 0 ? "txIncrease" : (tx.total < 0 ? "txDecrease" : "")}">${tx.total < 0 ? "-" : "+"} £${Math.abs(tx.total).toFixed(2)}</td>`,
                         `</tr>`
                     ].join("\n");
                     if (tx.total < 0) totalSpent += tx.total;
