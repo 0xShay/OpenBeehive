@@ -124,7 +124,7 @@
 
                                         if (!subjectColors[lesson["subject"]]) {
                                             let localColor = "";
-                                            crypto.getRandomValues(new Uint8Array(3)).forEach(i => localColor += (((i%100) + 155).toString(16)).padStart(2, "0"));
+                                            crypto.getRandomValues(new Uint8Array(3)).forEach(i => localColor += (((i%25) + 20).toString(16)).padStart(2, "0"));
                                             subjectColors[lesson["subject"]] = "#" + localColor;
                                         }
                                         
