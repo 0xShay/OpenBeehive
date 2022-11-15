@@ -97,10 +97,19 @@ img.github {
 }
 
 th, td { background-color: #121212 }
-th.complete, td.complete, td.txIncrease { background-color: #0e2112 }
+th.complete, td.complete, td.txIncrease { background-color: #15381d }
 th.incomplete, td.incomplete { background-color: #121212 }
-th.today, td.today { background-color: #241e13 }
-th.overdue, td.overdue, td.txDecrease { background-color: #291716 }
+th.today, td.today { background-color: #1c170d }
+th.overdue, td.overdue, td.txDecrease { background-color: #3f2220 }
+
+td.self_study { background-color: #121212 }
+td.silent_study { background-color: black }
+td.mathematics { background-color: #15381d }
+td.computer_science { background-color: #193b44 }
+td.french { background-color: #3f2220 }
+td.economics { background-color: #382617 }
+td.phsyics { background-color: #232747 }
+td.history { background-color: #292d06 }
 
 /* th.complete, td.complete { border-color: #30ff68; color: #30ff68; }
 th.incomplete, td.incomplete { }

@@ -62,36 +62,27 @@
 
             let ttSpan = document.getElementById("timetables");
 
-            // let subjectColors = {
-            //     "Self Study": "#ffffff",
-            //     "Silent Study": "#e6e6e6",
-            //     "Mathematics": "#e0ffde",
-            //     "Computer Science": "#e0feff",
-            //     "French": "#ccccff",
-            //     "Economics": "#ffebc7",
-            //     "Physics": "#cfe0ff",
-            //     "History": "#ffd9d9"
-            // };
-
-            let subjectColors = {
-                "Self Study": "#121212",
-                "Silent Study": "#000000",
-                "Mathematics": "#0e2112",
-                "Computer Science": "#162929",
-                "French": "#161b2b",
-                "Economics": "#241e13",
-                "Physics": "#1a2430",
-                "History": "#291716"
-            };            
+            let subjectClasses = {
+                "Self Study": "self_study",
+                "Silent Study": "silent_study",
+                "Mathematics": "mathematics",
+                "Computer Science": "computer_science",
+                "French": "french",
+                "Economics": "economics",
+                "Physics": "phsyics",
+                "History": "history"
+            };  
+            
+            let subjectColors = {};
 
             function previewSubjectColors() {
                 ttSpan.innerHTML = "";
                 let tbl = document.createElement("table");
-                for (subjectName of Object.keys(subjectColors)) {
+                for (subjectName of Object.keys(subjectClasses)) {
                     const tr = tbl.insertRow();
                     const td = tr.insertCell();
                     td.innerHTML = subjectName;
-                    td.style.backgroundColor = subjectColors[subjectName];
+                    td.classList.toggle(subjectClasses[subjectName]);
                 }
                 ttSpan.appendChild(tbl);
             };
@@ -122,7 +113,7 @@
                                         const td = tr.insertCell();
                                         const lesson = c["days"][j]["lessons"][i-1];
 
-                                        if (!subjectColors[lesson["subject"]]) {
+                                        if (!subjectClasses[lesson["subject"]] && !subjectColors[lesson["subject"]]) {
                                             let localColor = "";
                                             crypto.getRandomValues(new Uint8Array(3)).forEach(i => localColor += (((i%25) + 20).toString(16)).padStart(2, "0"));
                                             subjectColors[lesson["subject"]] = "#" + localColor;
@@ -148,7 +139,7 @@
                                             cal.addEvent(lesson["subject"], "", lesson["room"], dS, dE, { freq: "WEEKLY" });
                                         }
 
-                                        td.style.backgroundColor = subjectColors[lesson["subject"]];
+                                        subjectColors[lesson["subject"]] ? td.style.backgroundColor = subjectColors[lesson["subject"]] : td.classList.toggle(subjectClasses[lesson["subject"]]);
                                         td.style.width = '10%';
                                     }
                                 }
