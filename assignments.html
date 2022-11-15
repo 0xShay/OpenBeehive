@@ -77,7 +77,7 @@
                     if (timeNow > deadline) bgClass = "overdue";
                     if (isToday) bgClass = "today";
                     if (task.isComplete) bgClass = "complete";
-                    bgClass = ["incomplete", "complete", "today", "overdue"][Math.floor(Math.random() * 4)];
+                    // bgClass = ["incomplete", "complete", "today", "overdue"][Math.floor(Math.random() * 4)];
                     document.getElementById("assignments").innerHTML += [
                         `<tr>`,
                         `<td class="${bgClass}"><a href="task?id=${task.id}">${task.id}</a></td>`,
