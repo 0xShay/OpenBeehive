@@ -70,7 +70,7 @@
                 txList.forEach(tx => {
                     document.getElementById("assignments").innerHTML += [
                         `<tr>`,
-                        `<td>${(new Date(tx.date)).toLocaleDateString()} @ ${(new Date(tx.date)).toLocaleTimeString().substring(0, 5)}</td>`,
+                        `<td>${(new Date(tx.date)).toLocaleDateString('en-GB')} @ ${(new Date(tx.date)).toLocaleTimeString().substring(0, 5)}</td>`,
                         `<td>${tx.description}</td>`,
                         `<td class="${tx.total > 0 ? "txIncrease" : (tx.total < 0 ? "txDecrease" : "")}">${tx.total < 0 ? "-" : "+"} £${Math.abs(tx.total).toFixed(2)}</td>`,
                         `</tr>`

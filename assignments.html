@@ -82,9 +82,9 @@
                         `<tr>`,
                         `<td class="${bgClass}"><a href="task?id=${task.id}">${task.id}</a></td>`,
                         `<td class="${bgClass}">${task.title}</td>`,
-                        `<td class="${bgClass}">${(new Date(task.deadline)).toLocaleDateString()}</td>`,
+                        `<td class="${bgClass}">${(new Date(task.deadline)).toLocaleDateString('en-GB')}</td>`,
                         `<td class="${bgClass}">${task.setBy.firstName} ${task.setBy.lastName}</td>`,
-                        `<td class="${bgClass}">${(new Date(task.setOn)).toLocaleDateString()}</td>`,
+                        `<td class="${bgClass}">${(new Date(task.setOn)).toLocaleDateString('en-GB')}</td>`,
                         `</tr>`
                     ].join("\n");
                 });
