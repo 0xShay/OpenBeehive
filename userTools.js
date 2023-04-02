@@ -118,3 +118,31 @@ const markComplete = async (userID, assignmentID) => {
     // location.reload();
     window.location.replace('assignments');
 };
+
+// ordinal_suffix_of by Salman A on Stack Overflow: https://stackoverflow.com/a/13627586
+const ordinal_suffix_of = (i) => {
+    var j = i % 10,
+        k = i % 100;
+    if (j == 1 && k != 11) {
+        return i + "st";
+    }
+    if (j == 2 && k != 12) {
+        return i + "nd";
+    }
+    if (j == 3 && k != 13) {
+        return i + "rd";
+    }
+    return i + "th";
+};
+
+document.body.onload = () => {
+    setInterval(() => {
+        let dateNow = new Date();
+        let _day = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"][dateNow.getDay()];
+        let _date = dateNow.getDate() + ordinal_suffix_of(dateNow.getDate());
+        let _month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"][dateNow.getMonth()];
+        let _year = dateNow.getFullYear();
+        let _time = dateNow.toLocaleTimeString();
+        document.getElementById("time").innerHTML = `${_day} ${_date} ${_month} ${_year}<br>${_time}`
+    }, 1000)
+};

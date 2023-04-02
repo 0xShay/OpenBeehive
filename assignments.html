@@ -29,7 +29,7 @@
         <button type="submit" onclick="logoutUser()" style="float: right;">Log out</button>
         <button type="submit" onclick="window.location.replace('home')" style="float: right;">Home</button>
 
-        <p id="usernameMessage">Logged in: <span id="username"></span></p>
+        <p id="usernameMessage">Logged in: <span id="username"></span><br><span id="time">...</span></p>
 
         <h1 style="margin-bottom: 0;">BetterBeehive</h1>
         <h2 id="slogan" style="margin-top: 0;">It's Beehive but better!</h2>
@@ -78,11 +78,12 @@
                     if (isToday) bgClass = "today";
                     if (task.isComplete) bgClass = "complete";
                     // bgClass = ["incomplete", "complete", "today", "overdue"][Math.floor(Math.random() * 4)];
+                    let daysUntilDue = Math.round((new Date(task.deadline) - Date.now()) / 86400000);
                     document.getElementById("assignments").innerHTML += [
                         `<tr>`,
                         `<td class="${bgClass}"><a href="task?id=${task.id}">${task.id}</a></td>`,
                         `<td class="${bgClass}">${task.title}</td>`,
-                        `<td class="${bgClass}">${(new Date(task.deadline)).toLocaleDateString('en-GB')}</td>`,
+                        `<td class="${bgClass}">${(new Date(task.deadline)).toLocaleDateString('en-GB')}<br><span class="miniday ${daysUntilDue > 0 ? "incomplete" : (daysUntilDue < 0 ? "overdue" : "today")}">(${daysUntilDue > 0 ? `in ${daysUntilDue} days` : (daysUntilDue < 0 ? `${Math.abs(daysUntilDue)} days ago` : `today`)})</span></td>`,
                         `<td class="${bgClass}">${task.setBy.firstName} ${task.setBy.lastName}</td>`,
                         `<td class="${bgClass}">${(new Date(task.setOn)).toLocaleDateString('en-GB')}</td>`,
                         `</tr>`

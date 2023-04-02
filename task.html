@@ -29,7 +29,7 @@
         <button type="submit" id="back" onclick="window.location.replace('assignments')" style="float: right;">Back</button>
         <button type="submit" id="complete" onclick="markComplete(userID, getUrlParameter('id'))" style="float: right;">Mark complete</button>
         
-        <p id="usernameMessage">Logged in: <span id="username"></span></p>
+        <p id="usernameMessage">Logged in: <span id="username"></span><br><span id="time">...</span></p>
 
         <h1 style="margin-bottom: 0;">BetterBeehive</h1>
         <h2 id="slogan" style="margin-top: 0;">It's Beehive but better!</h2>
@@ -64,9 +64,10 @@
             getTaskInfo(userID, getUrlParameter("id")).then(task => {
                 console.log(task);
                 document.getElementById("title").innerHTML = `${task.title} (${task.id})`;
+                let daysUntilDue = Math.round((new Date(task.deadline) - Date.now()) / 86400000);
                 document.getElementById("taskInfo").innerHTML = [
                     `<b>Deadline</b>`,
-                    `${(new Date(task.deadline)).toLocaleDateString()}`,
+                    `${(new Date(task.deadline)).toLocaleDateString()} <span class="${daysUntilDue > 0 ? "incomplete" : (daysUntilDue < 0 ? "overdue" : "today")}">(${daysUntilDue > 0 ? `in ${daysUntilDue} days` : (daysUntilDue < 0 ? `${Math.abs(daysUntilDue)} days ago` : `today`)})</span>`,
                     ``,
                     `<b>Set by</b>`,
                     `${task.setBy.firstName} ${task.setBy.lastName}`,
