@@ -139,7 +139,7 @@ document.body.onload = () => {
     setInterval(() => {
         let dateNow = new Date();
         let _day = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"][dateNow.getDay()];
-        let _date = dateNow.getDate() + ordinal_suffix_of(dateNow.getDate());
+        let _date = ordinal_suffix_of(dateNow.getDate());
         let _month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"][dateNow.getMonth()];
         let _year = dateNow.getFullYear();
         let _time = dateNow.toLocaleTimeString();
