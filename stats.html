@@ -54,9 +54,10 @@
 
             getPlanner(userID).then(planner => {
                 document.getElementById("username").innerHTML = `${planner.firstName} ${planner.lastName} (${planner.tutorGroup.friendlyName})`;
+                let attendanceSeverityIndex = planner.pastoral.attendance > 97 ? 2 : (planner.pastoral.attendance < 97 ? 0 : 1);
                 document.getElementById("stats").innerHTML = [
                     `<b>Attendance</b>`,
-                    `${planner.pastoral.attendance.toFixed(2)}%`,
+                    `${planner.pastoral.attendance.toFixed(2)}% <span class=${["overdue", "today", "incomplete"][attendanceSeverityIndex]}>${["🙄 (below", "🤨 (on", "😎 (above"][attendanceSeverityIndex]} target)</span>`,
                     ``,
                     `<b>Absences</b>`,
                     `${planner.pastoral.absences} absences`,
