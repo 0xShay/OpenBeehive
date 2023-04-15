@@ -64,7 +64,7 @@
             getTaskInfo(userID, getUrlParameter("id")).then(task => {
                 console.log(task);
                 document.getElementById("title").innerHTML = `${task.title} (${task.id})`;
-                let daysUntilDue = Math.round((new Date(task.deadline) - Date.now()) / 86400000);
+                let daysUntilDue = Math.ceil((new Date(task.deadline) - Date.now()) / 86400000);
                 document.getElementById("taskInfo").innerHTML = [
                     `<b>Deadline</b>`,
                     `${(new Date(task.deadline)).toLocaleDateString()} <span class="${daysUntilDue > 0 ? "incomplete" : (daysUntilDue < 0 ? "overdue" : "today")}">(${daysUntilDue > 0 ? `in ${daysUntilDue} days` : (daysUntilDue < 0 ? `${Math.abs(daysUntilDue)} days ago` : `today`)})</span>`,

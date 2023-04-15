@@ -78,7 +78,7 @@
                     if (isToday) bgClass = "today";
                     if (task.isComplete) bgClass = "complete";
                     // bgClass = ["incomplete", "complete", "today", "overdue"][Math.floor(Math.random() * 4)];
-                    let daysUntilDue = Math.round((new Date(task.deadline) - Date.now()) / 86400000);
+                    let daysUntilDue = Math.ceil((new Date(task.deadline) - Date.now()) / 86400000);
                     document.getElementById("assignments").innerHTML += [
                         `<tr>`,
                         `<td class="${bgClass}"><a href="task?id=${task.id}">${task.id}</a></td>`,
