@@ -67,7 +67,7 @@
                 let daysUntilDue = Math.ceil((new Date(task.deadline) - Date.now()) / 86400000);
                 document.getElementById("taskInfo").innerHTML = [
                     `<b>Deadline</b>`,
-                    `${(new Date(task.deadline)).toLocaleDateString()} <span class="${daysUntilDue > 0 ? "incomplete" : (daysUntilDue < 0 ? "overdue" : "today")}">(${daysUntilDue > 0 ? `in ${daysUntilDue} days` : (daysUntilDue < 0 ? `${Math.abs(daysUntilDue)} days ago` : `today`)})</span>`,
+                    `${(new Date(task.deadline)).toLocaleDateString()} <span class="${task.isComplete ? "complete" : (daysUntilDue > 0 ? "incomplete" : (daysUntilDue < 0 ? "overdue" : "today"))}">(${daysUntilDue > 0 ? `in ${daysUntilDue} days` : (daysUntilDue < 0 ? `${Math.abs(daysUntilDue)} days ago` : `today`)})</span>`,
                     ``,
                     `<b>Set by</b>`,
                     `${task.setBy.firstName} ${task.setBy.lastName}`,

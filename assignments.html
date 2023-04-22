@@ -83,7 +83,7 @@
                         `<tr>`,
                         `<td class="${bgClass}"><a href="task?id=${task.id}">${task.id}</a></td>`,
                         `<td class="${bgClass}">${task.title}</td>`,
-                        `<td class="${bgClass}">${(new Date(task.deadline)).toLocaleDateString('en-GB')}<br><span class="miniday ${daysUntilDue > 0 ? "incomplete" : (daysUntilDue < 0 ? "overdue" : "today")}">(${daysUntilDue > 0 ? `in ${daysUntilDue} days` : (daysUntilDue < 0 ? `${Math.abs(daysUntilDue)} days ago` : `today`)})</span></td>`,
+                        `<td class="${bgClass}">${(new Date(task.deadline)).toLocaleDateString('en-GB')}<br><span class="miniday ${task.isComplete ? "complete" : (daysUntilDue > 0 ? "incomplete" : (daysUntilDue < 0 ? "overdue" : "today"))}">(${daysUntilDue > 0 ? `in ${daysUntilDue} days` : (daysUntilDue < 0 ? `${Math.abs(daysUntilDue)} days ago` : `today`)})</span></td>`,
                         `<td class="${bgClass}">${task.setBy.firstName} ${task.setBy.lastName}</td>`,
                         `<td class="${bgClass}">${(new Date(task.setOn)).toLocaleDateString('en-GB')}</td>`,
                         `</tr>`

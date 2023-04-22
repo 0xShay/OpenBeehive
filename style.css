@@ -118,6 +118,7 @@ td.history { background-color: #292d06 }
 span.incomplete { color: #30ff68; }
 span.today { color: #ffbb29; }
 span.overdue { color: #ff3d3d; }
+span.complete { color: #7e7e7e; }
 
 /* th.complete, td.complete { border-color: #30ff68; color: #30ff68; }
 th.incomplete, td.incomplete { }
