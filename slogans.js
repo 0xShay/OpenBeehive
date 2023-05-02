@@ -11,7 +11,7 @@ let slogans = [
     "Short-term pain -> long-term gain",
     "Does someone smell burning toast?"
 ].forEach(s => {
-    slogans.append(s);
+    slogans.push(s);
 });
 
 document.getElementById("slogan").innerHTML = slogans[Math.floor(Math.random() * slogans.length)];
